@@ -13,6 +13,7 @@ class HallController extends Controller
     {
         $title = 'Hall';
         $books = Book::all();
+        $books = Book::paginate(10);
 
         // return dd($books);
         return view('hall', compact('title', 'books'));
@@ -25,14 +26,14 @@ class HallController extends Controller
     }
 
     public function getByCategory(Category $category) {
-        $books = Book::where('category_id', $category->id)->get();
+        $books = Book::where('category_id', $category->id)->paginate(10);
         $title = 'Books of ' . $category->name;
 
         return view('hall', compact('title', 'books'));
     }
 
     public function getByAuthor(Author $author) {
-        $books = Book::where('author_id', $author->id)->get();
+        $books = Book::where('author_id', $author->id)->paginate(10);
         $title = 'Book by ' . $author->name;
 
         return view('hall', compact('title', 'books'));

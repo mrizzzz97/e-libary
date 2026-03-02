@@ -1,7 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -13,5 +17,38 @@ class LoginController extends Controller
     public function registration()
     {
         return view('auth.registration');
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|min:2|max:255',
+            'email' => 'required|email|unique:users|email:dns',
+            'username' => 'required|string|min:3|max:255|unique:users',
+            'password' => 'required|string|min:5',
+            'role' => 'required'
+        ]);
+
+        // HASH password sebelum simpan
+        $validatedData['password'] = Hash::make($validatedData['password']);
+
+        User::create($validatedData);
+
+        return redirect('/login')->with('success', 'Registrasi akun berhasil! Silahkan login.');
+    }
+    public function authenticate(Request $request)
+    {
+        $credentials = $request->validate([
+            'username' => 'required|string|min:3|max:255',
+            'password' => 'required|string|min:5'
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
+            return redirect()->intended('/dashboard');
+        }
+
+        return back()->with('error', 'Login Gagal!');
     }
 }

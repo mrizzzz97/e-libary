@@ -21,13 +21,12 @@ class BookFactory extends Factory
         $name = fake()->words(3, true);
 
         return [
-            'name'=>$name,
-            'slug'=>str()->slug($name),
-            'body'=>fake()->paragraphs(3, true),
-            'published_at'=>fake()->boolean(80) ? fake()->dateTimeBetween('-5 year', 'now') : null,
-            'category_id'=> Category::inRandomOrder()->first()->id,
-            'author_id'=> Author::inRandomOrder()->first()->id,
-
-        ];
+            'name' => $name,
+            'slug' => str()->slug($name),
+            'body' => fake()->paragraphs(3, true),
+            'published_at' => fake()->boolean(70) ? fake()->dateTimeBetween('-5 years', 'now') : null,
+            'category_id' => Category::inRandomOrder()->first()->id,
+            'author_id' => Author::inRandomOrder()->first()->id,
+        ]; 
     }
 }

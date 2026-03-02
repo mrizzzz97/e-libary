@@ -15,16 +15,16 @@ class CategorySeeder extends Seeder
     {
         DB::table('categories')->insert([
             [
-                'name'=>'Novel',
-                'slug'=>'novel',
+                'name' => 'Novel',
+                'slug' => 'novel'
             ],
             [
-                'name'=>'Komik',
-                'slug'=>'komik',
+                'name' => 'Komik',
+                'slug' => 'komik'
             ],
             [
-                'name'=>'Sejarah Islam',
-                'slug'=>'sejarah-islam',
+                'name' => 'Sejarah Islam',
+                'slug' => 'sejarah-islam'
             ]
         ]);
     }

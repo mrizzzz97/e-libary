@@ -19,8 +19,8 @@ class AuthorFactory extends Factory
         $name = fake()->name();
 
         return [
-            'name'=>$name,
-            'slug'=>str()->slug($name),
+            'name' => $name,
+            'slug' => str()->slug($name)
         ];
     }
 }

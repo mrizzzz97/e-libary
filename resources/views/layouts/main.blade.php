@@ -9,23 +9,24 @@
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     @vite('resources/css/app.css')
 
-    {{-- cnd font awosome --}}
+    {{-- cdn font awesome --}}
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.0.1/css/all.css" />
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.0.1/css/sharp-thin.css" />
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.0.1/css/sharp-solid.css" />
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.0.1/css/sharp-regular.css" />
     <link rel="stylesheet" href="https://site-assets.fontawesome.com/releases/v7.0.1/css/sharp-light.css" />
-
 </head>
 <body class="h-full">
     <div class="min-h-full">
         @include('partials.navbar')
+
         @include('partials.header')
+
         <main>
-        <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-            <!-- Your content -->
-            @yield('konten')
-        </div>
+            <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+                <!-- Your content -->
+                @yield('konten')
+            </div>
         </main>
     </div>
   

@@ -39,16 +39,39 @@ class LoginController extends Controller
     public function authenticate(Request $request)
     {
         $credentials = $request->validate([
-            'username' => 'required|string|min:3|max:255',
-            'password' => 'required|string|min:5'
+            'username' => 'required',
+            'password' => 'required'
         ]);
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/dashboard');
+            $user = Auth::user();
+            $role = $user->role;
+
+            switch ($role) {
+                case 'admin':
+                    return redirect()->intended('/dashboard');
+
+                case 'user':
+                    return redirect()->intended('/');
+
+                default:
+                    Auth::logout();
+                    return back()->with('error', 'Peran tidak dikenali');
+            }
         }
 
-        return back()->with('error', 'Login Gagal!');
+        return back()->with('error', 'Username atau password salah');
+    }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 }

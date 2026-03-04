@@ -20,9 +20,8 @@ class isAdmin
 
         // Jika bukan admin
         if (auth()->user()->role !== 'admin') {
-            abort(403, 'Akses ditolak. Anda tidak memiliki izin untuk mengakses halaman ini.');
+            return redirect('/forbidden');
         }
-
         return $next($request);
     }
 }

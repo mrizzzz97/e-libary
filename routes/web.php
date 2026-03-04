@@ -2,18 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HallController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
-
-
-// Homepage
-Route::get('/', function () {
-    return view('homepage', ['title' => 'Homepage']);
-});
 
 // About
 Route::get('/about', function () {
     return view('about', ['title' => 'About']);
 });
+
+// Homepage
+Route::get('/',[HomeController::class, 'index']);
 
 // Dashboard (HANYA ADMIN)
 Route::get('/dashboard', function () {
@@ -42,3 +40,20 @@ Route::post('/registration', [LoginController::class, 'store'])
 // Logout (auth only)
 Route::post('/logout', [LoginController::class, 'logout'])
     ->middleware('auth');
+
+// Forbidden page
+Route::get('/forbidden', function () {
+    return view('forbidden');
+});
+
+// Dashboard (HANYA ADMIN)
+Route::get('/dashboard', function () {
+    return view('dashboard.dashboard', ['title' => 'Dashboard']);
+})->middleware(['auth', 'isAdmin']);
+
+// Dashboard dengan prefix dan middleware
+Route::prefix('dashboard')->middleware(['auth', 'isAdmin'])->group(function () {
+    Route::get('/', function () {
+        return view('dashboard.dashboard', ['title' => 'Dashboard']);
+    });
+});

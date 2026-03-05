@@ -6,7 +6,7 @@
         </a>
         <ul class="mt-4">
             <span class="text-gray-400 font-bold ">ADMIN</span>
-           <li class="mb-1">
+            <li class="mb-1">
                 <a href="/dashboard"
                 class="flex font-semibold items-center py-2 px-4 rounded-md
                 {{ request()->is('dashboard') 
@@ -15,6 +15,26 @@
                     
                     <i class="ri-home-2-line mr-3 text-lg"></i>
                     <span class="text-sm">Dashboard</span>
+                </a>
+
+                <a href="/dashboard/category"
+                class="flex font-semibold items-center py-2 px-4 rounded-md
+                {{ request()->is('dashboard/category*') 
+                        ? 'bg-gray-950 text-white' 
+                        : 'text-gray-900 hover:bg-gray-950 hover:text-gray-100' }}">
+                    
+                    <i class="fa-solid fa-list mr-3"></i>
+                    <span class="text-sm">Category</span>
+                </a>
+
+                <a href="/dashboard/author"
+                class="flex font-semibold items-center py-2 px-4 rounded-md
+                {{ request()->is('dashboard/author*') 
+                        ? 'bg-gray-950 text-white' 
+                        : 'text-gray-900 hover:bg-gray-950 hover:text-gray-100' }}">
+                    
+                    <i class="fa-solid fa-address-book mr-3"></i>
+                    <span class="text-sm">Author</span>
                 </a>
             </li>
             {{-- <span class="text-gray-400 font-bold">PERSONAL</span>

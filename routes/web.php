@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\AuthorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+
+use function Pest\Laravel\call;
 
 // About
 Route::get('/about', function () {
@@ -56,4 +60,15 @@ Route::prefix('dashboard')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/', function () {
         return view('dashboard.dashboard', ['title' => 'Dashboard']);
     });
+
+    Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+    Route::get('/category/create',[CategoryController::class, 'create'])->name('category.create');
+    Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/category/{category:slug}/edit', [CategoryController::class, 'edit']);
+    Route::put('/category/{category:slug}', [CategoryController::class, 'update'])->name('category.update');
+    Route::delete('/category/{category:slug}', [CategoryController::class, 'destroy'])->name('category.destroy');
+
+    // author resource routes
+    Route::resource('author', AuthorController::class);
 });
+

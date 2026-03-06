@@ -5,15 +5,16 @@
             <h2 class="font-bold text-2xl">LOREM <span class="bg-[#f84525] text-white px-2 rounded-md">IPSUM</span></h2>
         </a>
         <ul class="mt-4">
-            <span class="text-gray-400 font-bold ">ADMIN</span>
-            <li class="mb-1">
+            <span class="text-gray-400 font-bold mt-4">ADMIN</span>
+
+            <li class="mb-1 space-y-2">
                 <a href="/dashboard"
                 class="flex font-semibold items-center py-2 px-4 rounded-md
                 {{ request()->is('dashboard') 
                         ? 'bg-gray-950 text-white' 
                         : 'text-gray-900 hover:bg-gray-950 hover:text-gray-100' }}">
                     
-                    <i class="ri-home-2-line mr-3 text-lg"></i>
+                    <i class="fa-sharp fa-solid fa-house-chimney mr-3"></i>
                     <span class="text-sm">Dashboard</span>
                 </a>
 
@@ -23,7 +24,7 @@
                         ? 'bg-gray-950 text-white' 
                         : 'text-gray-900 hover:bg-gray-950 hover:text-gray-100' }}">
                     
-                    <i class="fa-solid fa-list mr-3"></i>
+                    <i class="fa-solid fa-list-dropdown mr-3"></i>
                     <span class="text-sm">Category</span>
                 </a>
 
@@ -36,22 +37,17 @@
                     <i class="fa-solid fa-address-book mr-3"></i>
                     <span class="text-sm">Author</span>
                 </a>
-            </li>
-            {{-- <span class="text-gray-400 font-bold">PERSONAL</span>
-            <li class="mb-1 group">
-                <a href="" class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
-                    <i class='bx bx-bell mr-3 text-lg' ></i>                
-                    <span class="text-sm">Notifications</span>
-                    <span class=" md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-red-600 bg-red-200 rounded-full">5</span>
+
+                <a href="/dashboard/user"
+                class="flex font-semibold items-center py-2 px-4 rounded-md
+                {{ request()->is('dashboard/user*') 
+                        ? 'bg-gray-950 text-white' 
+                        : 'text-gray-900 hover:bg-gray-950 hover:text-gray-100' }}">
+                    
+                    <i class="fa-utility-fill fa-semibold fa-users mr-3"></i>
+                    <span class="text-sm">User</span>
                 </a>
             </li>
-            <li class="mb-1 group">
-                <a href="" class="flex font-semibold items-center py-2 px-4 text-gray-900 hover:bg-gray-950 hover:text-gray-100 rounded-md group-[.active]:bg-gray-800 group-[.active]:text-white group-[.selected]:bg-gray-950 group-[.selected]:text-gray-100">
-                    <i class='bx bx-envelope mr-3 text-lg' ></i>                
-                    <span class="text-sm">Messages</span>
-                    <span class=" md:block px-2 py-0.5 ml-auto text-xs font-medium tracking-wide text-green-600 bg-green-200 rounded-full">2 New</span>
-                </a>
-            </li> --}}
         </ul>
     </div>
     <div class="fixed top-0 left-0 w-full h-full bg-black/50 z-40 md:hidden sidebar-overlay"></div>

@@ -13,19 +13,21 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('users')->insert([
+        DB::table('users')->insertOrIgnore([
             [
-                'name' => "Admin Ganteng",
+                'name' => "Admin",
+                'slug' => "admin",
                 'username' => "admin",
                 'email' => 'admin@gmail.com',
                 'password' => bcrypt('admin123'),
                 'role' => 'admin'
             ],
             [
-                'name' => "Muhammad Ammar Ayyasy",
-                'username' => "ammarayyasy",
-                'email' => 'ammarmojur@gmail.com',
-                'password' => bcrypt('ammar123'),
+                'name' => "Muhammad Rizki",
+                'slug' => "muhammad-rizki",
+                'username' => "kii",
+                'email' => 'rizki@gmail.com',
+                'password' => bcrypt('rizki123'),
                 'role' => 'user'
             ],
         ]);

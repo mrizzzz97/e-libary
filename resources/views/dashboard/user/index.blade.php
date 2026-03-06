@@ -9,8 +9,8 @@
             </div>
         @endif
 
-        <a href="{{ route('category.create') }}" class="px-5 py-3 bg-sky-300 rounded-md text-gray-500 hover:bg-sky-400 transition">
-            Tambah category
+        <a href="{{ route('user.create') }}" class="px-5 py-3 bg-sky-300 rounded-md text-gray-500 hover:bg-sky-400 transition">
+            Tambah user
         </a>
     </div>
 </div>
@@ -23,30 +23,45 @@
                     <tr>
                         <th class="px-6 py-3">Name</th>
                         <th class="px-6 py-3">Slug</th>
+                        <th class="px-6 py-3">Username</th>
+                        <th class="px-6 py-3">Email</th>
+                        <th class="px-6 py-3">Role</th>
                         <th class="px-6 py-3 text-center">Action</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @forelse ($categories as $category)
+                    @forelse ($users as $user)
                     <tr class="bg-white border-b border-gray-200">
                         <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            {{ $category->name }}
+                            {{ $user->name }}
                         </td>
 
                         <td class="px-6 py-4">
-                            {{ $category->slug }}
+                            {{ $user->slug }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ $user->username }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ $user->email }}
+                        </td>
+
+                        <td class="px-6 py-4">
+                            {{ $user->role }}
                         </td>
 
                         <td class="px-6 py-4 flex gap-3 justify-center">
 
                             <!-- Edit -->
-                            <a href="/dashboard/category/{{ $category->slug }}/edit" class="text-yellow-500 hover:text-yellow-600">
+                            <a href="/dashboard/user/{{ $user->slug }}/edit" class="text-yellow-500 hover:text-yellow-600">
                                 <i class="fa-solid fa-pen-to-square"></i> Edit
                             </a>
 
                             <!-- Delete -->
-                            <form action="{{ route('category.destroy', $category->slug) }}" method="POST" onsubmit="return confirm('Yakin mau hapus?')">
+                            <form action="{{ route('user.destroy', $user->slug) }}" method="POST" onsubmit="return confirm('Yakin mau hapus?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="text-rose-500 hover:text-rose-600">
@@ -59,13 +74,13 @@
 
                     @empty
                     <tr>
-                        <td colspan="3" class="text-center py-6 text-gray-500">
-                            Data category belum ada.
+                        <td colspan="6" class="text-center py-6 text-gray-500">
+                            Data user belum ada.
                         </td>
                     </tr>
                     @endforelse
-
                 </tbody>
+
             </table>
         </div>
     </div>

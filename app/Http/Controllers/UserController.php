@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -30,8 +31,8 @@ class UserController extends Controller
             'password' => 'required|min:8',
             'role' => 'required',
         ]);
-
-        $validatedData['password'] = bcrypt($validatedData['password']);
+        
+        $validatedData['password'] = Hash::make($validatedData['password']);
 
         User::create($validatedData);
 
@@ -46,36 +47,36 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        // 1. Aturan validasi dasar (sesuai gambar)
         $rules = [
-            "name" => "required|max:255",
-            "username" => "required",
-            "email" => "required|email",
-            "role" => "required",
+            'name' => 'required|string|max:255',
+            'password' => 'required|string|min:5',
+            'role' => 'required'
         ];
 
-        if ($request->email != $user->email) {
-            $rules['email'] = 'required|email|unique:users';
+        // 2. Pengecekan perubahan data unik (sesuai gambar)
+        if (request('slug') != $user->slug) {
+            $rules['slug'] = 'unique:users|required';
         }
-
-        if ($request->username != $user->username) {
-            $rules['username'] = 'required|unique:users';
+        
+        if (request('email') != $user->email) {
+            $rules['email'] = 'required|email|unique:users|email:dns';
         }
-
-        if ($request->filled('password')) {
-            $rules['password'] = 'required|min:8';
+        
+        if (request('username') != $user->username) {
+            $rules['username'] = 'required|string|min:3|max:255|unique:users';
         }
 
         $validatedData = $request->validate($rules);
 
-        if ($request->filled('password')) {
-            $validatedData['password'] = bcrypt($validatedData['password']);
-        } else {
-            unset($validatedData['password']);
-        }
+        // [TAMBAHAN KEAMANAN] - Hash password sebelum di update agar bisa digunakan untuk login
+        $validatedData['password'] = Hash::make($validatedData['password']);
 
-        User::where('id', $user->id)->update($validatedData);
+        // 3. Update berdasarkan slug (sesuai gambar)
+        User::where('slug', $user->slug)->update($validatedData);
 
-        return redirect('/dashboard/user')->with('success', 'User has been updated!');
+        // 4. Redirect dengan pesan (sesuai gambar)
+        return redirect('/dashboard/user')->with('success', 'Data berhasil diubah!!');
     }
 
     public function destroy(User $user)

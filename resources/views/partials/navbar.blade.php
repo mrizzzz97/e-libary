@@ -122,7 +122,7 @@
                             alt="">
                     </div>
                     <div class="ml-3">
-                        <div class="text-base/5 font-medium text-white">{{ auth()->user()->name }}</div>
+                        <div class="text-base/5 font-medium text-white capitalize">{{ auth()->user()->username }}</div>
                         <div class="text-sm font-medium text-gray-400">{{ auth()->user()->email }}</div>
                     </div>
                 </div>

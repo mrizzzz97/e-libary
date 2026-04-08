@@ -24,11 +24,12 @@ class LoginController extends Controller
     // ================= REGISTER PROCESS =================
     public function store(Request $request)
     {
+        // Validasi disesuaikan dengan gambar yang diberikan
         $validatedData = $request->validate([
-            'name' => 'required|string|min:2|max:255',
-            'email' => 'required|email|unique:users',
-            'username' => 'required|string|min:3|max:255|unique:users',
-            'password' => 'required|string|min:5',
+            'name' => 'required|max:255',
+            'slug' => 'required|unique:users',
+            'email' => 'required|email:dns|unique:users',
+            'password' => 'required|min:5|max:255',
             'role' => 'required'
         ]);
 
@@ -55,7 +56,7 @@ class LoginController extends Controller
 
             $request->session()->regenerate();
 
-            if (auth()->user()->role === 'admin') {
+            if (Auth::user()->role === 'admin') {
                 return redirect('/dashboard');
             }
 

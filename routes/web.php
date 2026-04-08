@@ -7,6 +7,7 @@ use App\Http\Controllers\HallController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BookController;
 
 use function Pest\Laravel\call;
 
@@ -72,5 +73,6 @@ Route::prefix('dashboard')->middleware(['auth', 'isAdmin'])->group(function () {
     // author resource routes
     Route::resource('author', AuthorController::class);
     Route::resource('user', UserController::class);
+    Route::resource('book', BookController::class);
 });
 

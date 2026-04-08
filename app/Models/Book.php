@@ -19,6 +19,12 @@ class Book extends Model
 
     protected $with = ['author', 'category'];
 
+    // Menambahkan fungsi ini agar URL Route model binding menggunakan 'slug', bukan 'id'
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
     #[Scope]
     protected function search(Builder $query, $filters) {
         $query->when(

@@ -154,7 +154,7 @@
                             </div>
                         </div>
                         <div class="p-2 md:block text-left">
-                            <h2 class="text-sm font-semibold text-gray-800">{{ auth()->user()->name }}</h2>
+                            <h2 class="text-sm font-semibold text-gray-800 capitalize">{{ auth()->user()->username }}</h2>
                             <p class="text-xs text-gray-500 capitalize">{{ auth()->user()->role }}</p>
                         </div>                
                     </button>

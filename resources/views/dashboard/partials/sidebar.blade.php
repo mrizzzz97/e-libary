@@ -47,6 +47,17 @@
                     <i class="fa-utility-fill fa-semibold fa-users mr-3"></i>
                     <span class="text-sm">User</span>
                 </a>
+                <a href="/dashboard/book"
+                class="flex font-semibold items-center py-2 px-4 rounded-md
+                {{ request()->is('dashboard/book*') 
+                        ? 'bg-gray-950 text-white' 
+                        : 'text-gray-900 hover:bg-gray-950 hover:text-gray-100' }}">
+                    
+                    <i class="fa-solid fa-book mr-3"></i>
+                    <span class="text-sm">Book</span>
+                </a>
+
+
             </li>
         </ul>
     </div>

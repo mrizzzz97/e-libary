@@ -10,14 +10,17 @@ class CategoryController extends Controller
     public function index()
     {
         $title = 'Category';
-        $categories = Category::all();
+        // Menggunakan paginate(10) agar fungsi links() di halaman index bisa berjalan
+        $categories = Category::paginate(10);
         return view('dashboard.category.index', compact('title', 'categories'));
     }
+    
     public function create()
     {
         $title = 'Category | Create';
         return view('dashboard.category.create', compact('title'));
     }
+    
     public function store(Request $request)
     {
         $validatedData = $request->validate([

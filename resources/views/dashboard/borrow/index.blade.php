@@ -1,0 +1,104 @@
+@extends('dashboard.layouts.main')
+
+@section('content')
+  <div class="grid grid-cols-12 gap-4">
+    <div class="col-span-12 lg:col-span-9 p-4">
+        @session('success')
+            <p class="bg-green-100 p-4 rounded text-green-800 border border-green-300 text-sm mb-7">{{ session('success') }}</p>
+        @endsession
+    </div>
+  </div>
+
+  <div class="grid grid-cols-12 gap-4">
+    <div class="col-span-12 lg:col-span-12 p-4">
+      <div class="relative overflow-x-auto">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        No.
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Nama Peminjam
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Judul Buku
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Tanggal peminjaman
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Batas peminjaman
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Status
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if ($borrows->count())
+                    @foreach ($borrows as $borrow)
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-gray-400">
+                                {{ $loop->iteration }}
+                            </th>
+                            <td class="px-6 py-4">
+                                {{ $borrow->user->name }}
+                            </td>
+                            <td class="px-6 py-4 capitalize">
+                                {{ $borrow->book->name }}
+                            </td>
+                            <td class="px-6 py-4 capitalize">
+                                {{ $borrow->borrow_date->format('d M Y') }}
+                            </td>
+                            <td class="px-6 py-4 capitalize">
+                                {{ $borrow->due_date->format('d M Y') }}
+                            </td>
+                            <td class="px-6 py-4 capitalize">
+                                @if ($borrow->status == "diajukan")
+                                    <p class="bg-yellow-400 text-black p-1 text-center rounded">{{ $borrow->status }}</p>
+                                @elseif ($borrow->status == "dipinjam")
+                                    <p class="bg-green-400 text-black p-1 text-center rounded">{{ $borrow->status }}</p>
+                                @elseif ($borrow->status == "dikembalikan")
+                                    <p class="bg-blue-400 text-black p-1 text-center rounded">{{ $borrow->status }}</p>
+                                @elseif ($borrow->status == "ditolak")
+                                    <p class="bg-red-400 text-black p-1 text-center rounded">{{ $borrow->status }}</p>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 flex gap-2">
+                                @if ($borrow->status == 'diajukan' || $borrow->status == 'dipinjam')
+                                    <div class="text-yellow-500 hover:text-yellow-600">
+                                        <a href="/dashboard/borrow/{{ $borrow->id }}/edit"><i class="fa-solid fa-pen-to-square"></i> Edit</a>
+                                    </div>
+                                @elseif ($borrow->status == 'dikembalikan' || $borrow->status == 'ditolak')
+                                    <form action="/dashboard/borrow/{{ $borrow->id }}" method="POST" class="text-red-500 hover:text-red-600">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" onclick="return confirm('Apakah anda yakin?')"><i class="fa-sharp fa-solid fa-trash"></i> Delete</button>
+                                    </form>
+                                @endif
+                            </td>
+                        </tr>           
+                    @endforeach
+                @else
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+                        <td colspan="7" class="px-6 py-4 text-center text-gray-500">
+                            Tidak ada data peminjaman.
+                        </td>
+                    </tr>  
+                @endif
+            </tbody>
+        </table>
+
+        {{-- pagination --}}
+        <div class="mt-6">
+            {{ $borrows->links() }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+@endsection	

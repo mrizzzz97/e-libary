@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('cover')->nullable();
             $table->text('body');
             $table->timestamp('published_at')->nullable();
+            $table->boolean('status')->default(false);
             $table->foreignId('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->foreignId('author_id')->references('id')->on('authors')->onDelete('cascade');
             $table->timestamps();

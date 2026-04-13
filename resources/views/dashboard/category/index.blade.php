@@ -18,8 +18,8 @@
 <div class="grid grid-cols-12 gap-4">
     <div class="col-span-12 lg:col-span-9 p-4">
         <div class="relative overflow-x-auto">
-            <table class="w-full text-sm text-left text-gray-500">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th class="px-6 py-3">Name</th>
                         <th class="px-6 py-3">Slug</th>
@@ -28,45 +28,51 @@
                 </thead>
 
                 <tbody>
-                    @forelse ($categories as $category)
-                    <tr class="bg-white border-b border-gray-200">
-                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-                            {{ $category->name }}
-                        </td>
+                    @if ($categories->count())
+                        @foreach ($categories as $category)
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ $category->name }}
+                            </td>
 
-                        <td class="px-6 py-4">
-                            {{ $category->slug }}
-                        </td>
+                            <td class="px-6 py-4">
+                                {{ $category->slug }}
+                            </td>
 
-                        <td class="px-6 py-4 flex gap-3 justify-center">
+                            <td class="px-6 py-4 flex gap-3 justify-center">
 
-                            <!-- Edit -->
-                            <a href="/dashboard/category/{{ $category->slug }}/edit" class="text-yellow-500 hover:text-yellow-600">
-                                <i class="fa-solid fa-pen-to-square"></i> Edit
-                            </a>
+                                <!-- Edit -->
+                                <a href="/dashboard/category/{{ $category->slug }}/edit" class="text-yellow-500 hover:text-yellow-600">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                </a>
 
-                            <!-- Delete -->
-                            <form action="{{ route('category.destroy', $category->slug) }}" method="POST" onsubmit="return confirm('Yakin mau hapus?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-rose-500 hover:text-rose-600">
-                                    <i class="fa-solid fa-trash"></i> Delete
-                                </button>
-                            </form>
+                                <!-- Delete -->
+                                <form action="{{ route('category.destroy', $category->slug) }}" method="POST" onsubmit="return confirm('Yakin mau hapus?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="text-rose-500 hover:text-rose-600">
+                                        <i class="fa-solid fa-trash"></i> Delete
+                                    </button>
+                                </form>
 
-                        </td>
-                    </tr>
-
-                    @empty
-                    <tr>
-                        <td colspan="3" class="text-center py-6 text-gray-500">
-                            Data category belum ada.
-                        </td>
-                    </tr>
-                    @endforelse
-
+                            </td>
+                        </tr>
+                        @endforeach
+                    @else
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                            <td colspan="3" class="px-6 py-4 text-white text-center">
+                                Belum ada data category.
+                            </td>
+                        </tr>
+                    @endif
                 </tbody>
             </table>
+            
+            {{-- Pagination --}}
+            <div class="mt-6">
+                {{ $categories->links() }}
+            </div>
+
         </div>
     </div>
 </div>

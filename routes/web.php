@@ -8,8 +8,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookController;
-
-use function Pest\Laravel\call;
+use App\Http\Controllers\BorrowController;
 
 // About
 Route::get('/about', function () {
@@ -17,12 +16,7 @@ Route::get('/about', function () {
 });
 
 // Homepage
-Route::get('/',[HomeController::class, 'index']);
-
-// Dashboard (HANYA ADMIN)
-Route::get('/dashboard', function () {
-    return view('dashboard', ['title' => 'Dashboard']);
-})->middleware(['auth', 'isAdmin']);
+Route::get('/', [HomeController::class, 'index']);
 
 // Hall
 Route::get('/hall', [HallController::class, 'index']);
@@ -47,22 +41,23 @@ Route::post('/registration', [LoginController::class, 'store'])
 Route::post('/logout', [LoginController::class, 'logout'])
     ->middleware('auth');
 
+// Borrow
+Route::post('/borrow', [BorrowController::class, 'store']);
+
 // Forbidden page
 Route::get('/forbidden', function () {
     return view('forbidden');
 });
 
-// Dashboard (HANYA ADMIN)
-Route::get('/dashboard', function () {
-    return view('dashboard.dashboard', ['title' => 'Dashboard']);
-})->middleware(['auth', 'isAdmin']);
-
-// Dashboard dengan prefix dan middleware
+// Dashboard dengan prefix dan middleware (HANYA ADMIN)
 Route::prefix('dashboard')->middleware(['auth', 'isAdmin'])->group(function () {
+    
+    // Rute utama dashboard (/dashboard)
     Route::get('/', function () {
         return view('dashboard.dashboard', ['title' => 'Dashboard']);
     });
 
+    // Kategori
     Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
     Route::get('/category/create',[CategoryController::class, 'create'])->name('category.create');
     Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
@@ -70,9 +65,9 @@ Route::prefix('dashboard')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::put('/category/{category:slug}', [CategoryController::class, 'update'])->name('category.update');
     Route::delete('/category/{category:slug}', [CategoryController::class, 'destroy'])->name('category.destroy');
 
-    // author resource routes
+    // Resource routes
     Route::resource('author', AuthorController::class);
     Route::resource('user', UserController::class);
     Route::resource('book', BookController::class);
+    Route::resource('borrow', BorrowController::class);
 });
-

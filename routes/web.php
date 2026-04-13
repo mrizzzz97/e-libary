@@ -42,7 +42,12 @@ Route::post('/logout', [LoginController::class, 'logout'])
     ->middleware('auth');
 
 // Borrow
-Route::post('/borrow', [BorrowController::class, 'store']);
+Route::post('/borrow', [BorrowController::class, 'store']
+    )->middleware('auth');
+    
+// User's borrows
+Route::get('/borrow/{user:slug}', [BorrowController::class, 'userIndex'])
+    ->middleware('auth');
 
 // Forbidden page
 Route::get('/forbidden', function () {

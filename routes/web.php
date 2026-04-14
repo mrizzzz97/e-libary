@@ -47,8 +47,13 @@ Route::post('/borrow', [BorrowController::class, 'store']
     
 // User's borrows
 Route::get('/borrow/{user:slug}', [BorrowController::class, 'userIndex'])
-    ->middleware('auth');
+    ->middleware('auth')
+    ->name('borrow.user'); 
 
+// Borrow detail
+Route::get('/borrow/detail/{borrow}', [BorrowController::class, 'detail'])
+    ->middleware('auth');
+    
 // Forbidden page
 Route::get('/forbidden', function () {
     return view('forbidden');

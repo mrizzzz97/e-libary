@@ -38,7 +38,7 @@ class BorrowController extends Controller
 
         $user = User::find($request->user_id);
 
-        return redirect()->route('borrows', $user->slug)->with('success', 'Borrow added successfully');
+        return redirect()->route('borrow.user', $user->slug)->with('success', 'Borrow added successfully');
     }
 
     public function edit(Borrow $borrow)
@@ -50,6 +50,10 @@ class BorrowController extends Controller
     public function update(Request $request, Borrow $borrow)
     {
         $borrow->status = $request->status;
+        if ($request->filled('message')) {
+            $borrow->message = $request->message;
+        }
+
         $borrow->save();
 
         $book = Book::find($borrow->book_id);
@@ -77,4 +81,10 @@ class BorrowController extends Controller
         return view('borrow', compact('borrows', 'title'));
     }
 
+    public function detail(Borrow $borrow)
+    {
+        $title = 'Borrow Detail';
+
+        return view('borrow-detail', compact('borrow', 'title'));
+    }
 }
